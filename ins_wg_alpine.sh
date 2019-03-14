@@ -5,7 +5,7 @@ echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/testing' >> /etc/apk/repos
 
 apk update   #更新源索引文件
 apk add curl sudo
-sudo su
+
 apk add linux-vanilla linux-virt linux-vanilla-dev
 apk add wireguard-vanilla wireguard-virt iptables
 apk add wireguard-tools bash
