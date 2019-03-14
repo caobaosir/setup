@@ -9,6 +9,7 @@ apk add wireguard-vanilla wireguard-virt
 apk add wireguard-tools-wg  iptables
 
 #服务端配置文件（单/多用户）
+mkdir /etc/wireguard
 cat > /etc/wireguard/wg0.conf <<EOF
 [Interface]
 PrivateKey = cFGAuatqg8RHfes4P+iphOGMp7XUNjq16K6ksfuuJ3Y=
@@ -50,13 +51,12 @@ EOF
 #配置iptables
 
 rc-update add iptables
-service iptables start
 iptables -P INPUT ACCEPT
 iptables -P OUTPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -F
 service iptables save
-service iptables restart
+service iptables start
 
 #启用ip4路由
 echo 1 > /proc/sys/net/ipv4/ip_forward
