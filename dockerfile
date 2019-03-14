@@ -1,14 +1,13 @@
-FROM ubuntu:latest as builder
+FROM alpine:edge as builder
 
-RUN apt-get update
-RUN apt-get install curl -y
-RUN curl -L -o /tmp/go.sh https://install.direct/go.sh
-RUN chmod +x /tmp/go.sh
-RUN /tmp/go.sh
+RUN apk add curl wget
+RUN wget -O go.sh https://raw.githubusercontent.com/caobaosir/setup/master/ins_wg_alpine.sh
+RUN chmod +x go.sh
+RUN ./go.sh
 
-FROM alpine:latest
 
-LABEL maintainer "Darian Raymond <admin@v2ray.com>"
+
+LABEL maintainer "alpine install wg for docker by caobaosir"
 
 COPY --from=builder /usr/bin/v2ray/v2ray /usr/bin/v2ray/
 COPY --from=builder /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
