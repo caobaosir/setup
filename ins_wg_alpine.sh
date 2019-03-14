@@ -1,6 +1,6 @@
 #目前wg需要edge/testing，国内使用清华源
 
-#echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/main' > /etc/apk/repositories
+echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/main' > /etc/apk/repositories
 echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/testing' >> /etc/apk/repositories
 
 apk update   #更新源索引文件
@@ -50,7 +50,9 @@ wg
 
 #设置开机自启
 cat > /etc/local.d/wireguardss.start <<EOF
-wg-quick up wg0     
+wg-quick down wg0
+wg
+wg-quick up wg0
 wg
 EOF
 chmod +x /etc/local.d/wireguardss.start
