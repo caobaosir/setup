@@ -1,14 +1,15 @@
 #目前wg需要edge/testing，国内使用清华源
 
-#echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/main' > /etc/apk/repositories
-echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/testing' >> /etc/apk/repositories
+echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/testing' > /etc/apk/repositories
+#echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/main' >> /etc/apk/repositories
+
 
 apk update   #更新源索引文件
 apk add curl sudo
 
-apk add linux-vanilla linux-virt #linux-vanilla-dev
-apk add wireguard-vanilla wireguard-virt iptables
-apk add wireguard-tools bash openrc
+apk add linux-virt      #linux-vanilla linux-vanilla-dev
+apk add wireguard-virt  #wireguard-vanilla
+apk add wireguard-tools bash openrc iptables
 
 #服务端配置文件（单/多用户）
 mkdir /etc/wireguard
@@ -27,8 +28,8 @@ AllowedIPs = 10.0.0.2/32
 EOF
 
 #服务器网卡配置====/etc/network/interfaces ======================
-chmod +rw /etc/network/interfaces
-cat >> /etc/network/interfaces <<EOF
+sudo chmod +rw /etc/network/interfaces
+sudo cat >> /etc/network/interfaces <<EOF
 auto wg0
 iface wg0 inet static
     address 10.0.0.1
@@ -45,17 +46,17 @@ EOF
 #ifdown wg0
 
 #启用wg
-wg-quick up wg0
-wg
+sudo wg-quick up wg0
+sudo wg
 
 #设置开机自启
-cat > /etc/local.d/wireguardss.start <<EOF
+sudo cat > /etc/local.d/wireguardss.start <<EOF
 wg-quick down wg0
 wg
 wg-quick up wg0
 wg
 EOF
-chmod +rwx /etc/local.d/wireguardss.start
+sudo chmod +rwx /etc/local.d/wireguardss.start
 sudo rc-update add local
 
 #配置iptables
@@ -69,8 +70,8 @@ sudo service iptables save
 sudo service iptables restart
 
 #启用ip4路由
-chmod +rw /proc/sys/net/ipv4/ip_forward
-echo 1 > /proc/sys/net/ipv4/ip_forward
-chmod +rw /etc/sysctl.conf
-echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
+sudo chmod +rw /proc/sys/net/ipv4/ip_forward
+sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+sudo chmod +rw /etc/sysctl.conf
+sudo echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
 sudo sysctl -p /etc/sysctl.conf
