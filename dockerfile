@@ -1,6 +1,6 @@
 FROM alpine:edge as builder
 
-RUN apk add curl wget
+RUN apk add wget
 RUN wget -O go.sh https://raw.githubusercontent.com/caobaosir/setup/master/ins_wg_alpine.sh
 RUN chmod +x go.sh
 RUN ./go.sh

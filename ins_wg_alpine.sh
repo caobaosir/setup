@@ -41,13 +41,20 @@ cp iftmp /etc/network/interfaces
 
 
 #接口启停
-ifup wg0
+#ifup wg0
 #ifdown wg0
 
 #启用wg
-wg-quick up wg0     #    wg  命令显示状态
-rc-update add wg-quick@wg0
+wg-quick up wg0
 wg
+
+#设置开机自启
+cat > /etc/local.d/wireguardss.start <<EOF
+wg-quick up wg0     
+wg
+EOF
+chmod +x /etc/local.d/wireguardss.start
+rc-update add local
 
 #配置iptables
 
@@ -62,3 +69,4 @@ service iptables restart
 #启用ip4路由
 echo 1 > /proc/sys/net/ipv4/ip_forward
 echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
+sysctl -p /etc/sysctl.conf
