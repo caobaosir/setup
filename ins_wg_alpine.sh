@@ -28,7 +28,7 @@ AllowedIPs = 10.0.0.2/32
 EOF
 
 #服务器网卡配置====/etc/network/interfaces ======================
-sudo chmod +rw /etc/network/interfaces
+sudo chmod 777 /etc/network/interfaces
 sudo cat >> /etc/network/interfaces <<EOF
 auto wg0
 iface wg0 inet static
@@ -56,7 +56,7 @@ wg
 wg-quick up wg0
 wg
 EOF
-sudo chmod +rwx /etc/local.d/wireguardss.start
+sudo chmod 777 /etc/local.d/wireguardss.start
 sudo rc-update add local
 
 #配置iptables
@@ -70,8 +70,8 @@ sudo service iptables save
 sudo service iptables restart
 
 #启用ip4路由
-sudo chmod +rw /proc/sys/net/ipv4/ip_forward
+sudo chmod 777 /proc/sys/net/ipv4/ip_forward
 sudo echo 1 > /proc/sys/net/ipv4/ip_forward
-sudo chmod +rw /etc/sysctl.conf
+sudo chmod 777 /etc/sysctl.conf
 sudo echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
 sudo sysctl -p /etc/sysctl.conf
