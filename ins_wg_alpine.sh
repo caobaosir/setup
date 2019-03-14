@@ -4,9 +4,11 @@
 echo 'http://mirrors.tuna.tsinghua.edu.cn/alpine/edge/testing' >> /etc/apk/repositories
 
 apk update   #更新源索引文件
+apk add curl sudo
+sudo su
 apk add linux-vanilla linux-virt linux-vanilla-dev
 apk add wireguard-vanilla wireguard-virt iptables
-apk add wireguard-tools
+apk add wireguard-tools bash
 
 #服务端配置文件（单/多用户）
 mkdir /etc/wireguard
@@ -37,14 +39,14 @@ iface wg0 inet static
 EOF
 cp iftmp /etc/network/interfaces
 
-#启用wg
-wg-quick up wg0     #    wg  命令显示状态
-rc-update add wg-quick@wg0
+
 #接口启停
 ifup wg0
 #ifdown wg0
 
-
+#启用wg
+wg-quick up wg0     #    wg  命令显示状态
+rc-update add wg-quick@wg0
 wg
 
 #配置iptables
