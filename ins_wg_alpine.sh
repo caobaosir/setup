@@ -5,11 +5,18 @@ apk add linux-virt wireguard-virt wireguard-tools iptables bash
 mkdir /usr/src
 mkdir /usr/src/run
 cd /usr/src/run
+
 cat >run.sh<<EOF
-#!/bin/bash
+#!/bin/sh
+wg-quick up wg0
 while true
 do
 sleep 1
 done
 EOF
 chmod +x run.sh
+
+
+
+
+#end
