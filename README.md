@@ -18,11 +18,10 @@ vi /etc/wireguard/wg0.conf
 
 #此处放入配置文件文本
 
+#wireguard安装完成后，建议先在host上连网试机，没问题后，再下拉容器：
 
-#wireguard安装完成后，建议先在host上连网试机，没问题后，再运行容器：
+docker pull caobaosir/wireguard-alpine:v1
 
-#例如：
+#运行容器，例如：
 
-docker run -it --rm --cap-add net_admin --cap-add sys_module \
-       -v /etc/wireguard:/etc/wireguard -v /lib/modules:/lib/modules \
-       -p 5555:5555/udp alpine:edge
+docker run -d --rm --cap-add net_admin -v /etc/wireguard:/etc/wireguard -p 5555:5555/udp caobaosir/wireguard-alpine:v1
