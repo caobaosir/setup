@@ -8,7 +8,7 @@ cd /usr/src/run
 
 cat >run.sh<<EOF
 #!/bin/sh
-wg
+wg-quick up wg4
 while true
 do
 sleep 1
