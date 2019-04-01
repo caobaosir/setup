@@ -18,10 +18,29 @@ vi /etc/wireguard/wg0.conf
 
 #此处放入配置文件文本
 
-#wireguard安装完成后，建议先在host上连网试机，没问题后，再下拉容器：
 
-docker pull caobaosir/wireguard-alpine:v1
+
+
+#修改好/etc/wireguard/wg1.conf的虚拟网卡配置文件
+mkdir /etc/wireguard
+
+vi /etc/wireguard/wg1.conf
+
+#此处放入配置文件文本
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+wg0  wg1 wg2 ..............wg8    共可以放0-8虚拟网卡配置文件
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
 
 #运行容器，例如：
 
-docker run -d --rm --cap-add net_admin -v /etc/wireguard:/etc/wireguard -p 5555:5555/udp caobaosir/wireguard-alpine:v1
+docker run -d --rm --cap-add net_admin -v /etc/wireguard:/etc/wireguard -p 5555:5555/udp 容器名 /usr/src/run/run0.sh
+
+
+结尾运行文件可以是 0-8  如:run4.sh
