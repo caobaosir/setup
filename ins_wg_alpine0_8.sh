@@ -6,6 +6,16 @@ mkdir /usr/src
 mkdir /usr/src/run
 cd /usr/src/run
 
+cat >run.sh<<EOF
+#!/bin/sh
+wg-quick up wg0
+while true
+do
+sleep 1
+done
+EOF
+chmod +x run.sh
+
 cat >run0.sh<<EOF
 #!/bin/sh
 wg-quick up wg0
@@ -99,7 +109,7 @@ done
 EOF
 chmod +x run8.sh
 
-cat >run.sh<<EOF
+cat >runsleep.sh<<EOF
 #!/bin/sh
 wg
 while true
@@ -107,7 +117,7 @@ do
 sleep 1
 done
 EOF
-chmod +x run.sh
+chmod +x runsleep.sh
 
 
 

@@ -44,3 +44,5 @@ docker run -d --rm --cap-add net_admin -v /etc/wireguard:/etc/wireguard -p 5555:
 
 
 结尾运行文件可以是 0-8  如:run4.sh
+
+run.sh   默认加载wg0     runsleep.sh  不加载wgx只有循环sleep1
